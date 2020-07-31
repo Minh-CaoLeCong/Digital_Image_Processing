@@ -18,14 +18,6 @@ import time
 import math
 
 def piecewiselinear(imageInput):
-    """
-    c is a positive constant :
-    if r = 0, then s = 0
-	and if r = L - 1, then s = L - 1
-	so from the form of the log transformation : s = c * log(1 + r)
-	we can compute : c = (L - 1) / log(1 + L - 1)
-	L = 256 = > c = 45.9859
-    """
     # the possible intensity levels in the image (256 for an 8-bit image)
     L = 256
 
@@ -38,8 +30,17 @@ def piecewiselinear(imageInput):
     M = imageInput.shape[0] # height of image
     N = imageInput.shape[1] # width of image
 
+    # 'rmin' and 'rmax' denote the the minimum and maximum intensity
+    # levels in the input image.
+    # Using 'minMaxLoc' function in OpenCV to finds the minimum
+    # and maximum element values in the input image
     rmin, rmax, _, _, = cv2.minMaxLoc(imageInput)
 
+    # contrast stretching: 
+	#   setting (r1, s1) = (rmin, 0) and (r2, s2) = (rmax, L - 1)
+	# thresholding function:
+	# 	setting (r1, s1) = (m, 0) and (r2, s2) = (m, L - 1)
+	# 	where m is the mean intensity level in the image
     r1 = rmin; s1 = 0
     r2 = rmax; s2 = L - 1
 
@@ -48,7 +49,7 @@ def piecewiselinear(imageInput):
         for y in range(0, N):
             # denote the values of pixels, before and after processing, by r and s, respectively
             r = imageInput[x, y]
-            # log transformation function:
+            # piecewise linear transformation function:
             if (r < r1):
                 s = s1 / r1 * r
             elif (r < r2):
