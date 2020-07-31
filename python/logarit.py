@@ -5,7 +5,7 @@
 # Github: https://github.com/Minh-CaoLeCong
 
 # USAGE
-# python nagative.py --input imagePath
+# python logarit.py --input imagePath
 # example:  python logarit.py --input E:\\CVS\\Project\\Digital_Image_Processing\\python\\image\\logarit.tif
 #           python logarit.py --input E:/CVS/Project/Digital_Image_Processing/python/image/negative.tif
 
