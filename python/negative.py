@@ -1,3 +1,9 @@
+# Tutor: Tran Tien Duc
+# Gmail: trantienduc@gmail.com
+# Created by Cao Le Cong Minh
+# Gmail: caolecongminh1997@gmail.com
+# Github: https://github.com/Minh-CaoLeCong
+
 # USAGE
 # python nagative.py --input imagePath
 # example:  python negative.py --input E:\\CVS\\Project\\Digital_Image_Processing\\python\\image\\negative.tif
