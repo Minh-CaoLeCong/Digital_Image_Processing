@@ -77,7 +77,7 @@ startTime = time.time()
 imageLogarit = logarit(imageGrayscale)
 print("[INFOR]: Time execution: {}".format(time.time() - startTime))
 
-# display negative processing image
+# display logarit processing image
 cv2.imshow('logarit', imageLogarit)
 
 print("[INFOR]: Press 's' key to save result")
