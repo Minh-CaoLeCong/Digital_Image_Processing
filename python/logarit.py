@@ -7,7 +7,7 @@
 # USAGE
 # python logarit.py --input imagePath
 # example:  python logarit.py --input E:\\CVS\\Project\\Digital_Image_Processing\\python\\image\\logarit.tif
-#           python logarit.py --input E:/CVS/Project/Digital_Image_Processing/python/image/negative.tif
+#           python logarit.py --input E:/CVS/Project/Digital_Image_Processing/python/image/logarit.tif
 
 # import the necessary packages
 import argparse
@@ -72,17 +72,17 @@ imageGrayscale = cv2.cvtColor(imageOriginal, cv2.COLOR_BGR2GRAY)
 # display grayscale image
 cv2.imshow('grayscale', imageGrayscale)
 
-# negative processing
+# logarit processing
 startTime = time.time()
-imageNegative = logarit(imageGrayscale)
+imageLogarit = logarit(imageGrayscale)
 print("[INFOR]: Time execution: {}".format(time.time() - startTime))
 
 # display negative processing image
-cv2.imshow('negative', imageNegative)
+cv2.imshow('logarit', imageLogarit)
 
 print("[INFOR]: Press 's' key to save result")
 print("[INFOR]: Press 'q' key to quit")
 key = cv2.waitKey(0) & 0xFF
 if key == ord("s"):
     resultPath = "./output/" + "logarit_" + imageFileName
-    cv2.imwrite(resultPath, imageNegative)
+    cv2.imwrite(resultPath, imageLogarit)
