@@ -26,7 +26,7 @@ def logarit(imageInput):
 	we can compute : c = (L - 1) / log(1 + L - 1)
 	L = 256 = > c = 45.9859
     """
-    # the possible intensity levels in the image (256 for an 8-bit image)
+    # the number of possible intensity levels in the image (256 for an 8-bit image)
     L = 256
 
     if (imageInput.shape[-1] == 3): # '-1' retrieves last item that is number of channels image, or could use '-2'
