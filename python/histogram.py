@@ -28,7 +28,7 @@ def histogram(imageInput):
 	    'nk' is the number of pixels that have intensity 'rk'.
 	    M and N are the number of image rows and columns.
     """
-    # the possible intensity levels in the image (256 for an 8-bit image)
+    # the number of possible intensity levels in the image (256 for an 8-bit image)
     L = 256
 
     if (imageInput.shape[-1] == 3): # '-1' retrieves last item that is number of channels image, or could use '-2'
@@ -49,7 +49,7 @@ def histogram(imageInput):
     p = [0.0] * L # List of zeros - float
 
     for r in range(0, L):
-        p[r] = h[r] / (M * N) # normalized histogram
+        p[r] = h[r] / (M * N) # normalized histogram: the probability of occurrence of intensity level in a digital image
 
     scale = 5000
 
