@@ -30,7 +30,7 @@ def power(imageInput, gamma):
 	so the form of Power-law transformations: s = c * pow(r, gamma)
 	we can compute: c = (L - 1) / pow(L - 1, gamma) or c = pow(L - 1, 1 - gamma)
     """
-    # the possible intensity levels in the image (256 for an 8-bit image)
+    # the number of possible intensity levels in the image (256 for an 8-bit image)
     L = 256
 
     if (imageInput.shape[-1] == 3): # '-1' retrieves last item that is number of channels image, or could use '-2'
