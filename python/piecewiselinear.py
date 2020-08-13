@@ -18,7 +18,7 @@ import time
 import math
 
 def piecewiselinear(imageInput):
-    # the possible intensity levels in the image (256 for an 8-bit image)
+    # the number of possible intensity levels in the image (256 for an 8-bit image)
     L = 256
 
     # if not grayscale image, convert it
