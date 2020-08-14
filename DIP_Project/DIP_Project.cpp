@@ -213,6 +213,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				imshow("HistogramEqualization", imgout);
 				break;
 
+			case ID_CHAPTER3_HISTOGRAMSPECIFICATION:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				DIP_Chapter3::HistogramSpecification(imgin, imgout);
+				namedWindow("HistogramSpecification", WINDOW_AUTOSIZE);
+				imshow("HistogramSpecification", imgout);
+				break;
+
 			case ID_CHAPTER3_POWER:
 				imgout = Mat(imgin.size(), CV_8UC1);
 				DIP_Chapter3::Power(imgin, imgout);

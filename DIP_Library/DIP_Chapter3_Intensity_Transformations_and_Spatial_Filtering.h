@@ -24,6 +24,7 @@ namespace DIP
 		static void Logarit(Mat imgin, Mat imgout);
 		static void Histogram(Mat imgin, Mat imgout);
 		static void HistogramEqualization(Mat imgin, Mat imgout);
+		static void HistogramSpecification(Mat imgin, Mat imgout);
 		static void LocalHistogram(Mat imgin, Mat imgout);
 		static void Power(Mat imgin, Mat imgout);
 		static void PiecewiseLinear(Mat imgin, Mat imgout);

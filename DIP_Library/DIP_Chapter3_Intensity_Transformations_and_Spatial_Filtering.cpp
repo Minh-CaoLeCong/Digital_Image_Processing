@@ -300,6 +300,94 @@ namespace DIP
 		return;
 	}
 
+	void DIP_Chapter3::HistogramSpecification(Mat imgin, Mat imgout)
+	{
+		// check channels of image
+		// if not grayscale image, convert it
+		if (imgin.channels() >= 3)
+			cvtColor(imgin, imgin, CV_RGB2GRAY);
+
+		// take the height and width of the input image
+		int M = imgin.size().height;
+		int N = imgin.size().width;
+
+		double pz[L];
+		double G[L];
+		double pr[L];
+		double T[L];
+		double sum;
+
+		int z, k, i, j, x, y;
+
+		// initially histogram specification
+		double pz1, pz2, pz3, pz4, pz5, pz6;
+		int z1, z2, z3, z4, z5, z6;
+		z1 = 0;		pz1 = 0.75;
+		z2 = 10;	pz2 = 7;
+		z3 = 20;	pz3 = 0.75;
+		z4 = 180;	pz4 = 0;
+		z5 = 200;	pz5 = 0.7;
+		z6 = 255;	pz6 = 0;
+		for (z = 0; z < L; z++)
+		{
+			if (z < z2)
+				pz[z] = (pz2 - pz1) / (z2 - z1)*(z - z1) + pz1;
+			else if (z < z3)
+				pz[z] = (pz3 - pz2) / (z3 - z2)*(z - z2) + pz2;
+			else if (z < z4)
+				pz[z] = (pz4 - pz3) / (z4 - z3)*(z - z3) + pz3;
+			else if (z < z5)
+				pz[z] = (pz5 - pz4) / (z5 - z4)*(z - z4) + pz4;
+			else
+				pz[z] = (pz6 - pz5) / (z6 - z5)*(z - z5) + pz5;
+		}
+		sum = 0;
+		for (z = 0; z < L; z++)
+			sum += pz[z];
+		for (z = 0; z < L; z++)
+			pz[z] = pz[z] / sum;
+		for (k = 0; k < L; k++) 
+		{
+			G[k] = 0;
+			for (i = 0; i <= k; i++)
+				G[k] += pz[i];
+		}
+
+		// histogram of input image
+		int r, h[L];
+		for (r = 0; r < L; r++)
+			h[r] = 0;
+		for (x = 0; x < M; x++)
+			for (y = 0; y < N; y++)
+			{
+				r = imgin.at<uchar>(x, y);
+				h[r]++;
+			}
+		for (r = 0; r < L; r++)
+			pr[r] = (double)h[r] / (M * N);
+		for (k = 0; k < L; k++)
+		{
+			T[k] = 0;
+			for (j = 0; j <= k; j++)
+				T[k] += pr[j];
+		}
+
+		// matching histograms
+		double s;
+		for (x = 0; x < M; x++)
+			for (y = 0; y < N; y++) 
+			{
+				r = imgin.at<uchar>(x, y);
+				s = T[r];
+				for (k = 0; k < L; k++)
+					if (G[k] >= s)
+						break;
+				imgout.at<uchar>(x, y) = k;
+			}
+		return;
+	}
+
+
 	void DIP_Chapter3::LocalHistogram(Mat imgin, Mat imgout)
 	{
 		int m = 3, n = 3;
