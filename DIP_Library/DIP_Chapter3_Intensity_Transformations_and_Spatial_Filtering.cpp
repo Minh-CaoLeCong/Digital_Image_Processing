@@ -387,9 +387,13 @@ namespace DIP
 		return;
 	}
 
-
 	void DIP_Chapter3::LocalHistogram(Mat imgin, Mat imgout)
 	{
+		// check channels of image
+		// if not grayscale image, convert it
+		if (imgin.channels() >= 3)
+			cvtColor(imgin, imgin, CV_RGB2GRAY);
+
 		int m = 3, n = 3;
 
 		Mat win = Mat(m, n, CV_8UC1);
@@ -409,7 +413,8 @@ namespace DIP
 					for (t = -b; t <= b; t++)
 						win.at<uchar>(s + a, t + b) = imgin.at<uchar>(x + s, y + t);
 
-				equalizeHist(win, wout);
+				DIP_Chapter3::HistogramEqualization(win, wout);
+				//equalizeHist(win, wout);
 				imgout.at<uchar>(x, y) = wout.at<uchar>(a, b);
 			}
 		return;
