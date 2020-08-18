@@ -67,7 +67,7 @@ def histogramEqualization(imageInput):
 
     return imageOutput
 
-def localHistogram(imageInput):
+def localHistogram(imageInput, neighborhoodHeight, neighborhoodWidth):
     """
     """
     # the number of possible intensity levels in the image (256 for an 8-bit image)
@@ -80,9 +80,6 @@ def localHistogram(imageInput):
 
     M = imageInput.shape[0] # height of image
     N = imageInput.shape[1] # width of image
-
-    neighborhoodHeight = 3
-    neighborhoodWidth = 3
 
     neighborhoodInput = np.zeros((neighborhoodHeight, neighborhoodWidth), np.uint8)
     neighborhoodOutput = np.zeros((neighborhoodHeight, neighborhoodWidth), np.uint8)
@@ -105,6 +102,10 @@ def localHistogram(imageInput):
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--input", required=True,\
     help="input image path to processing")
+ap.add_argument("-nh", "--height", type=int, default=3,\
+    help="height of neighborhood - default: 3")
+ap.add_argument("-nw", "--width", type=int, default=3,\
+    help="width of neighborhood - default: 3")
 args = vars(ap.parse_args())
 
 # read original image from input image path
@@ -122,8 +123,10 @@ imageGrayscale = cv2.cvtColor(imageOriginal, cv2.COLOR_BGR2GRAY)
 cv2.imshow('grayscale', imageGrayscale)
 
 # local histogram processing
+h = int(args["height"]) # height of neighborhood
+w = int(args["width"]) # width of neighborhood
 startTime = time.time()
-imageLocalHistogram = localHistogram(imageGrayscale)
+imageLocalHistogram = localHistogram(imageGrayscale, h, w)
 print("[INFOR]: Time execution: {}".format(time.time() - startTime))
 
 # display local histogram processing image
