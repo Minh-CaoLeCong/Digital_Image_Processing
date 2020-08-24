@@ -146,7 +146,7 @@ namespace DIP
 		return;
 
 	} //  Power-law transformations: s = c * pow(r, gamma)
-
+	
 	void DIP_Chapter3::PiecewiseLinear(Mat imgin, Mat imgout)
 	{
 		// check channels of image
@@ -201,15 +201,15 @@ namespace DIP
 	}
 
 	/// the "normalized histogram" is defined as: 
-	//	(the probability of occurrence of intensity level 'rk' in a image)
-	//	where rk = [0, L - 1]
-	///		p(rk) = h(rk) / M * N = nk / M * N
-	// NOTE: the sum of p(rk) for all values of k is always 1
-	// h(rk) = nk: 
-	//	where k = 0, 1, 2, ..., L - 1, denote the intensities of an 
-	//		L-level digital image.
-	//	'nk' is the number of pixels that have intensity 'rk'.
-	// M and N are the number of image rows and columns.
+	/*	(the probability of occurrence of intensity level 'rk' in a image)
+		where rk = [0, L - 1]
+			p(rk) = h(rk) / M * N = nk / M * N
+	NOTE: the sum of p(rk) for all values of k is always 1
+		h(rk) = nk: 
+		where k = 0, 1, 2, ..., L - 1, denote the intensities of an 
+			L-level digital image.
+		'nk' is the number of pixels that have intensity 'rk'.
+		M and N are the number of image rows and columns. */
 	void DIP_Chapter3::Histogram(Mat imgin, Mat imgout)
 	{
 		// check channels of image
@@ -417,6 +417,147 @@ namespace DIP
 				//equalizeHist(win, wout);
 				imgout.at<uchar>(x, y) = wout.at<uchar>(a, b);
 			}
+		return;
+	}
+
+	double DIP_Chapter3::Mean(Mat image)
+	{
+		double m;
+		int x, y;
+		int r;
+
+		m = 0;
+
+		int M = image.size().height;
+		int N = image.size().width;
+
+		for (x = 0; x < M; x++)
+			for (y = 0; y < N; y++)
+			{
+				r = image.at<uchar>(x, y);
+				m += r;
+			}
+
+		return (m / (M * N));
+	}
+
+	double DIP_Chapter3::StandardDeviation(Mat image, double mean)
+	{
+		double variance;
+		int x, y;
+		int r;
+
+		variance = 0;
+
+		int M = image.size().height;
+		int N = image.size().width;
+
+		for (x = 0; x < M; x++)
+			for (y = 0; y < N; y++)
+			{
+				r = image.at<uchar>(x, y);
+				variance += (r - mean) * (r - mean);
+			}
+
+		return sqrt(variance / (M * N));
+	}
+
+	void DIP_Chapter3::HistogramStatistics1(Mat imgin, Mat imgout)
+	{
+		int m = 3;
+		int n = 3;
+
+		int x, y, s, t;
+		int a = m / 2;
+		int b = n / 2;
+
+		double meanGlobal, meanLocal, varianceGlobal, varianceLocal;
+		double C = 22.8;
+		double k0 = 0.0;
+		double k1 = 0.1;
+		double k2 = 0.0;
+		double k3 = 0.1;
+
+		meanGlobal = DIP_Chapter3::Mean(imgin);
+		varianceGlobal = DIP_Chapter3::StandardDeviation(imgin, meanGlobal);
+
+		Mat w = Mat(m, n, CV_8UC1);
+
+		int M = imgin.size().height;
+		int N = imgin.size().width;
+
+		for (x = a; x < M - a; x++)
+			for (y = b; y < N - b; y++)
+			{
+				for (s = -a; s <= a; s++)
+					for (t = -b; t <= b; t++)
+						w.at<uchar>(s + a, t + b) = imgin.at<uchar>(x + s, y + t);
+
+				meanLocal = DIP_Chapter3::Mean(w);
+				varianceLocal = DIP_Chapter3::StandardDeviation(w, meanLocal);
+
+				if ((k0 * meanGlobal <= meanLocal) && (meanLocal <= k1 * meanGlobal) &&
+					((k2 * varianceGlobal <= varianceLocal) && (varianceLocal <= k3 * varianceGlobal)))
+					imgout.at<uchar>(x, y) = (int)C * imgin.at<uchar>(x, y);
+				else
+					imgout.at<uchar>(x, y) = imgin.at<uchar>(x, y);
+			}
+
+		return;
+	}
+
+	void DIP_Chapter3::HistogramStatistics2(Mat imgin, Mat imgout)
+	{
+		Scalar mean, standardDeviation;
+
+		meanStdDev(imgin, mean, standardDeviation);
+
+		double meanGlobal = mean.val[0];
+		double varianceGlobal = standardDeviation.val[0];
+
+		double meanLocal, varianceLocal;
+
+		int m = 3;
+		int n = 3;
+
+		Mat w = Mat(m, n, CV_8UC1);
+
+		int M = imgin.size().height;
+		int N = imgin.size().width;
+
+		int x, y, s, t;
+		int a = m / 2;
+		int b = n / 2;
+		/*double C = 22.8;
+		double k0 = 0.0;
+		double k1 = 0.1;
+		double k2 = 0.0;
+		double k3 = 0.1;*/
+
+		for (x = a; x < M - a; x++)
+			for (y = b; y < N - b; y++)
+			{
+				for (s = -a; s <= a; s++)
+					for (t = -b; t <= b; t++)
+						w.at<uchar>(s + a, t + b) = imgin.at<uchar>(x + s, y + t);
+
+				meanStdDev(w, mean, standardDeviation);
+				meanLocal = mean.val[0];
+				varianceLocal = standardDeviation.val[0];
+
+				/*if ((k0 * meanGlobal <= meanLocal) && (meanLocal <= k1 * meanGlobal) &&
+					((k2 * varianceGlobal <= varianceLocal) && (varianceLocal <= k3 * varianceGlobal)))
+					imgout.at<uchar>(x, y) = (int)C * imgin.at<uchar>(x, y);
+				else
+					imgout.at<uchar>(x, y) = imgin.at<uchar>(x, y);*/
+			
+				if (2 <= meanLocal && meanLocal <= 50)
+					imgout.at<uchar>(x, y) = 20 * imgin.at<uchar>(x, y);
+				else
+					imgout.at<uchar>(x, y) = imgin.at<uchar>(x, y);
+
+			}
+
 		return;
 	}
 

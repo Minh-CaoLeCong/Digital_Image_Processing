@@ -26,6 +26,10 @@ namespace DIP
 		static void HistogramEqualization(Mat imgin, Mat imgout);
 		static void HistogramSpecification(Mat imgin, Mat imgout);
 		static void LocalHistogram(Mat imgin, Mat imgout);
+		static double Mean(Mat img);
+		static double StandardDeviation(Mat image, double mean);
+		static void HistogramStatistics1(Mat imgin, Mat imgout);
+		static void HistogramStatistics2(Mat imgin, Mat imgout);
 		static void Power(Mat imgin, Mat imgout);
 		static void PiecewiseLinear(Mat imgin, Mat imgout);
 		static void MyFilter2D(Mat imgin, Mat imgout);

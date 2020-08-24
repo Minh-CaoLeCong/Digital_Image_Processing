@@ -220,6 +220,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				imshow("HistogramSpecification", imgout);
 				break;
 
+			case ID_CHAPTER3_LOCALHISTOGRAM:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				DIP_Chapter3::LocalHistogram(imgin, imgout);
+				namedWindow("LocalHistogram", WINDOW_AUTOSIZE);
+				imshow("LocalHistogram", imgout);
+				break;
+
+			case ID_CHAPTER3_HISTOGRAMSTATISTICS1:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				DIP_Chapter3::HistogramStatistics1(imgin, imgout);
+				namedWindow("HistogramStatistics1", WINDOW_AUTOSIZE);
+				imshow("HistogramStatistics1", imgout);
+				break;
+
+			case ID_CHAPTER3_HISTOGRAMSTATISTICS2:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				DIP_Chapter3::HistogramStatistics2(imgin, imgout);
+				namedWindow("HistogramStatistics2", WINDOW_AUTOSIZE);
+				imshow("HistogramStatistics2", imgout);
+				break;
+
 			case ID_CHAPTER3_POWER:
 				imgout = Mat(imgin.size(), CV_8UC1);
 				DIP_Chapter3::Power(imgin, imgout);
@@ -248,13 +269,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				DIP_Chapter3::PiecewiseLinear(imgin, imgout);
 				namedWindow("PiecewiseLinear", WINDOW_AUTOSIZE);
 				imshow("PiecewiseLinear", imgout);
-				break;
-
-			case ID_CHAPTER3_LOCALHISTOGRAM:
-				imgout = Mat(imgin.size(), CV_8UC1);
-				DIP_Chapter3::LocalHistogram(imgin, imgout);
-				namedWindow("LocalHistogram", WINDOW_AUTOSIZE);
-				imshow("LocalHistogram", imgout);
 				break;
 
 			case ID_CHAPTER3_MYFILTER2D:
