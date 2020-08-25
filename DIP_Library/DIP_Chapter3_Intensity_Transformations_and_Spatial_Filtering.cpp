@@ -508,15 +508,17 @@ namespace DIP
 
 	void DIP_Chapter3::HistogramStatistics2(Mat imgin, Mat imgout)
 	{
-		Scalar mean, standardDeviation;
+		Scalar Mean;
+		//Scalar standardDeviation;
 
-		meanStdDev(imgin, mean, standardDeviation);
+		//Mean = mean(imgin);
+		//meanStdDev(imgin, mean, standardDeviation);
 
-		double meanGlobal = mean.val[0];
-		double varianceGlobal = standardDeviation.val[0];
+		//double meanGlobal = Mean.val[0];
+		//double varianceGlobal = standardDeviation.val[0];
 
-		double meanLocal, varianceLocal;
-
+		double meanLocal;
+		//double varianceLocal;
 		int m = 3;
 		int n = 3;
 
@@ -541,9 +543,10 @@ namespace DIP
 					for (t = -b; t <= b; t++)
 						w.at<uchar>(s + a, t + b) = imgin.at<uchar>(x + s, y + t);
 
-				meanStdDev(w, mean, standardDeviation);
-				meanLocal = mean.val[0];
-				varianceLocal = standardDeviation.val[0];
+				//meanStdDev(w, mean, standardDeviation);
+				Mean = mean(w);
+				meanLocal = Mean.val[0];
+				//varianceLocal = standardDeviation.val[0];
 
 				/*if ((k0 * meanGlobal <= meanLocal) && (meanLocal <= k1 * meanGlobal) &&
 					((k2 * varianceGlobal <= varianceLocal) && (varianceLocal <= k3 * varianceGlobal)))
