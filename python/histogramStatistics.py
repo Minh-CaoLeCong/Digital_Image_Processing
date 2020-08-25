@@ -6,8 +6,8 @@
 
 # USAGE
 # python histogramStatistics.py --input imagePath
-# example:  python histogramStatistics.py --input .\\image\\histogramStatistics.tif
-#           python histogramStatistics.py --input ./image/histogramStatistics.tif
+# example:  python histogramStatistics.py --input .\\image\\histogramStatistics.tif --c 22.8 --k0 0.0 --k1 0.1 --k2 0.0 --k3 0.1
+#           python histogramStatistics.py --input ./image/histogramStatistics.tif --c 22.8 --k0 0.0 --k1 0.1 --k2 0.0 --k3 0.1
 
 # import the necessary packages
 import argparse
@@ -50,7 +50,7 @@ def meanStdDev(image):
     return mean, variance
 
 
-def histogramStatistics(imageInput, neighborhoodHeight, neighborhoodWidth):
+def histogramStatistics(imageInput, neighborhoodHeight, neighborhoodWidth, C, k0, k1, k2, k3):
     """
     """
     # the number of possible intensity levels in the image (256 for an 8-bit image)
@@ -71,11 +71,11 @@ def histogramStatistics(imageInput, neighborhoodHeight, neighborhoodWidth):
 
     meanGlobal, varianceGlobal = meanStdDev(imageInput)
 
-    C = 22.8
-    k0 = 0.0
-    k1 = 0.1
-    k2 = 0.0
-    k3 = 0.1
+    # C = 22.8
+    # k0 = 0.0
+    # k1 = 0.1
+    # k2 = 0.0
+    # k3 = 0.1
 
     for x in range(a, M - a):
         for y in range(b, N - b):
@@ -101,6 +101,17 @@ ap.add_argument("-nh", "--height", type=int, default=3,\
     help="height of neighborhood - default: 3")
 ap.add_argument("-nw", "--width", type=int, default=3,\
     help="width of neighborhood - default: 3")
+ap.add_argument("-c", "--c", type=float, default=22.8,\
+    help="specified constant, to increase (or decrease) the value of its intensity level\
+        relative to the rest of the image - default: 22.8")
+ap.add_argument("-k0", "--k0", type=float, default=0.0,\
+    help="lower limit of the mean intensity - default: 0.0")
+ap.add_argument("-k1", "--k1", type=float, default=0.1,\
+    help="upper limit of the mean intensity - default: 0.1")
+ap.add_argument("-k2", "--k2", type=float, default=0.0,\
+    help="lower limit of the standard deviation - default: 0.0")
+ap.add_argument("-k3", "--k3", type=float, default=0.1,\
+    help="upper limit of the standard deviation - default: 0.1")
 args = vars(ap.parse_args())
 
 # read original image from input image path
@@ -120,8 +131,13 @@ cv2.imshow('grayscale', imageGrayscale)
 # local enhancement using histogram statistics processing
 h = int(args["height"]) # height of neighborhood
 w = int(args["width"]) # width of neighborhood
+C = float(args["c"])
+k0 = float(args["k0"])
+k1 = float(args["k1"])
+k2 = float(args["k2"])
+k3 = float(args["k3"])
 startTime = time.time()
-imageHistogramStatistics = histogramStatistics(imageGrayscale, h, w)
+imageHistogramStatistics = histogramStatistics(imageGrayscale, h, w, C, k0, k1, k2, k3)
 print("[INFOR]: Time execution: {}".format(time.time() - startTime))
 
 # display histogram statistics processing image
