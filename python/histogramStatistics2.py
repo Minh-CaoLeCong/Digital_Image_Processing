@@ -7,7 +7,7 @@
 # USAGE
 # python histogramStatistics2.py --input imagePath
 # example:  python histogramStatistics2.py --input .\\image\\histogramStatistics.tif --c 22.8 --lo 2.0 --up 50.0
-#           python histogramStatistics2.py --input ./image/histogramStatistics.tif
+#           python histogramStatistics2.py --input ./image/histogramStatistics.tif --c 22.8 --lo 2.0 --up 50.0
 
 # import the necessary packages
 import argparse
