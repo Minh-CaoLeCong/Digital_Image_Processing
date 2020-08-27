@@ -131,6 +131,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static char szFile[260];       // buffer for file name
 	static Mat imgin;
 	static Mat imgout;
+	static Mat kernel;
+	static int w[3][3] = { {1,1,1}, {1,1,1}, {1,1,1} };
     switch (message)
     {
 	case WM_CREATE:
@@ -195,6 +197,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				imshow("Logarit", imgout);
 				break;
 
+			case ID_CHAPTER3_POWER:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				DIP_Chapter3::Power(imgin, imgout);
+				namedWindow("Power", WINDOW_AUTOSIZE);
+				imshow("Power", imgout);
+				break;
+
 			case ID_CHAPTER3_HISTOGRAM:
 				imgout = Mat(imgin.size(), CV_8UC1);
 				DIP_Chapter3::Histogram(imgin, imgout);
@@ -241,11 +250,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				imshow("HistogramStatistics2", imgout);
 				break;
 
-			case ID_CHAPTER3_POWER:
+			case ID_CHAPTER3_SPATIALCORRELATION:
 				imgout = Mat(imgin.size(), CV_8UC1);
-				DIP_Chapter3::Power(imgin, imgout);
-				namedWindow("Power", WINDOW_AUTOSIZE);
-				imshow("Power", imgout);
+				//kernel = Mat::ones(3, 3, CV_8UC1);
+				kernel = Mat(3, 3, CV_8UC1, w);
+				DIP_Chapter3::SpatialCorrelation(imgin, imgout, kernel);
+				namedWindow("SpatialCorrelation", WINDOW_AUTOSIZE);
+				imshow("SpatialCorrelation", imgout);
+				break;
+
+			case ID_CHAPTER3_SPATIALCONVOLUTION:
+				imgout = Mat(imgin.size(), CV_8UC1);
+				/*kernel = Mat::ones(3, 3, CV_8UC1);*/
+				kernel = Mat (3, 3, CV_8UC1, w);
+				DIP_Chapter3::SpatialConvolution(imgin, imgout, kernel);
+				namedWindow("SpatialConvolution", WINDOW_AUTOSIZE);
+				imshow("SpatialConvolution", imgout);
 				break;
 
 			case ID_CHAPTER3_WHITEBALANCING:
@@ -269,13 +289,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				DIP_Chapter3::PiecewiseLinear(imgin, imgout);
 				namedWindow("PiecewiseLinear", WINDOW_AUTOSIZE);
 				imshow("PiecewiseLinear", imgout);
-				break;
-
-			case ID_CHAPTER3_MYFILTER2D:
-				imgout = Mat(imgin.size(), CV_8UC1);
-				DIP_Chapter3::MyFilter2D(imgin, imgout);
-				namedWindow("MyFilter2D", WINDOW_AUTOSIZE);
-				imshow("MyFilter2D", imgout);
 				break;
 
 			//HELP

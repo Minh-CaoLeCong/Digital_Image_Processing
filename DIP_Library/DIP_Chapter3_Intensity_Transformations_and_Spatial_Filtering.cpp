@@ -564,10 +564,8 @@ namespace DIP
 		return;
 	}
 
-	void DIP_Chapter3::MyFilter2D(Mat imgin, Mat imgout)
+	void DIP_Chapter3::SpatialCorrelation(Mat imgin, Mat imgout, Mat kernel)
 	{
-		Mat kernel = Mat::ones(3, 3, CV_8UC1);
-
 		int m = kernel.size().height;
 		int n = kernel.size().width;
 
@@ -589,6 +587,37 @@ namespace DIP
 					for (t = -b; t <= b; t++)
 					{
 						r += kernel.at<uchar>(s + a, t + b) * imgin.at<uchar>(x + s, y + t);
+
+					}
+				imgout.at<uchar>(x, y) = (uchar)r;
+			}
+
+		return;
+	}
+
+	void DIP_Chapter3::SpatialConvolution(Mat imgin, Mat imgout, Mat kernel)
+	{
+		int m = kernel.size().height;
+		int n = kernel.size().width;
+
+		int M = imgin.size().height;
+		int N = imgin.size().width;
+
+		int x, y, s, t;
+
+		int a = m / 2, b = n / 2;
+
+		float r;
+
+		for (x = a; x < M - a; x++)
+			for (y = b; y < N - b; y++)
+			{
+				r = 0;
+
+				for (s = a; s >= -a; s--)
+					for (t = b; t >= -b; t--)
+					{
+						r += kernel.at<uchar>(s + a, t + b) * imgin.at<uchar>(x - s, y - t);
 
 					}
 				imgout.at<uchar>(x, y) = (uchar)r;

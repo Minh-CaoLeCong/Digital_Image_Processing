@@ -32,7 +32,8 @@ namespace DIP
 		static void HistogramStatistics2(Mat imgin, Mat imgout);
 		static void Power(Mat imgin, Mat imgout);
 		static void PiecewiseLinear(Mat imgin, Mat imgout);
-		static void MyFilter2D(Mat imgin, Mat imgout);
+		static void SpatialCorrelation(Mat imgin, Mat imgout, Mat kernel);
+		static void SpatialConvolution(Mat imgin, Mat imgout, Mat kernel);
 		static void GreyWorld_Algorithm(Mat imgin, Mat imgout);
 		static void Histogram_RGB(Mat imgin);
 		static void equalizeIntensity(Mat imgin, Mat imgout);
