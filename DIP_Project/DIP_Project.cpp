@@ -165,7 +165,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case ID_FILE_OPENIMAGE:
 				if (GetOpenFileName(&ofn) == TRUE)
 				{
-					imgin = imread(ofn.lpstrFile, CV_LOAD_IMAGE_ANYCOLOR);
+					imgin = imread(ofn.lpstrFile, IMREAD_COLOR);
 					namedWindow("Image In", WINDOW_AUTOSIZE);
 					imshow("Image In", imgin);
 				}
@@ -177,7 +177,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			//CHAPTER3
 			case ID_CHAPTER3_RGB2GRAY:
-				cvtColor(imgin, imgin, CV_RGB2GRAY);
+				cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 				imgout = imgin.clone();
 				namedWindow("RGB2GRAY", WINDOW_AUTOSIZE);
 				imshow("RGB2GRAY", imgout);
@@ -252,8 +252,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_CHAPTER3_SPATIALCORRELATION:
 				imgout = Mat(imgin.size(), CV_8UC1);
-				//kernel = Mat::ones(3, 3, CV_8UC1);
-				kernel = Mat(3, 3, CV_8UC1, w);
+				kernel = Mat::ones(3, 3, CV_8UC1);
+				//kernel = Mat(3, 3, CV_8UC1, w);
 				DIP_Chapter3::SpatialCorrelation(imgin, imgout, kernel);
 				namedWindow("SpatialCorrelation", WINDOW_AUTOSIZE);
 				imshow("SpatialCorrelation", imgout);
@@ -261,8 +261,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_CHAPTER3_SPATIALCONVOLUTION:
 				imgout = Mat(imgin.size(), CV_8UC1);
-				/*kernel = Mat::ones(3, 3, CV_8UC1);*/
-				kernel = Mat (3, 3, CV_8UC1, w);
+				kernel = Mat::ones(3, 3, CV_8UC1);
+				//kernel = Mat (3, 3, CV_8UC1, w);
 				DIP_Chapter3::SpatialConvolution(imgin, imgout, kernel);
 				namedWindow("SpatialConvolution", WINDOW_AUTOSIZE);
 				imshow("SpatialConvolution", imgout);

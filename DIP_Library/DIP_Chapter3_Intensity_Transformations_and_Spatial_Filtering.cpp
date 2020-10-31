@@ -16,7 +16,7 @@ namespace DIP
 		// if not grayscale image, convert it 
 		if (imgin.channels() >= 3)
 			// convert to grayscale image
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of image
 		int M = imgin.size().height;
@@ -56,7 +56,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of image
 		int M = imgin.size().height;
@@ -109,7 +109,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of image
 		int M = imgin.size().height;
@@ -152,7 +152,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// 'rmin' and 'rmax' denote the the minimum and maximum intensity
 		// levels in the input image
@@ -215,7 +215,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of the input image
 		int M = imgin.size().height;
@@ -253,7 +253,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of the input image
 		int M = imgin.size().height;
@@ -305,7 +305,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		// take the height and width of the input image
 		int M = imgin.size().height;
@@ -392,7 +392,7 @@ namespace DIP
 		// check channels of image
 		// if not grayscale image, convert it
 		if (imgin.channels() >= 3)
-			cvtColor(imgin, imgin, CV_RGB2GRAY);
+			cvtColor(imgin, imgin, COLOR_RGB2GRAY);
 
 		int m = 3, n = 3;
 
@@ -742,7 +742,7 @@ namespace DIP
 		{
 			Mat ycrcb;
 
-			cvtColor(imgin, ycrcb, CV_BGR2YCrCb);
+			cvtColor(imgin, ycrcb, COLOR_BGR2YCrCb);
 
 			vector<Mat> channels;
 			split(ycrcb, channels);
@@ -751,7 +751,7 @@ namespace DIP
 
 			merge(channels, ycrcb);
 
-			cvtColor(ycrcb, imgout, CV_YCrCb2BGR);
+			cvtColor(ycrcb, imgout, COLOR_YCrCb2BGR);
 		}
 		return;
 	}
